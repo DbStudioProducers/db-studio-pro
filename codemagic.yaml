@@ -1,1 +1,28 @@
-
+workflows:
+  db-studio-release:
+    name: dB Studio Full Release (EXE + APK)
+    max_build_duration: 60
+    instance_type: windows_x86_64
+    environment:
+      node: latest
+    triggering:
+      events: [push]
+      branches: [main]
+    scripts:
+      - name: Install Dependencies
+        script: npm install
+      - name: Build Web
+        script: npm run build
+      - name: Build Windows EXE
+        script: npx electron-builder --windows --portable
+      - name: Build Android APK
+        script: |
+          npm install -g @capacitor/cli
+          npx cap add android || true
+          npx cap sync
+          cd android && ./gradlew assembleDebug
+    artifacts:
+      - dist/*.exe
+      - build/*.exe
+      - release/*.exe
+      - android/app/build/outputs/apk/debug/*.apk
