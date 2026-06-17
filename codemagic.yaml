@@ -2,16 +2,22 @@ workflows:
   db-studio-release:
     name: dB Studio Full Release (EXE + APK)
     max_build_duration: 60
-    instance_type: windows_x86_64
+    # Alterado para windows_x2 conforme a lista permitida
+    instance_type: windows_x2
     environment:
       node: latest
     triggering:
-      events: [push]
-      branches: [main]
+      events:
+        - push
+      # Corrigido para branch_patterns que é o formato aceito
+      branch_patterns:
+        - pattern: main
+          include: true
+          source: true
     scripts:
       - name: Install Dependencies
         script: npm install
-      - name: Build Web
+      - name: Build Web Frontend
         script: npm run build
       - name: Build Windows EXE
         script: npx electron-builder --windows --portable
@@ -26,3 +32,7 @@ workflows:
       - build/*.exe
       - release/*.exe
       - android/app/build/outputs/apk/debug/*.apk
+    publishing:
+      email:
+        recipients:
+          - seu-email@exemplo.com # Coloque seu email real aqui
