@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "dist": "npm run build && electron-builder"
+    "dist": "npm run build && electron-builder --win --portable"
   },
   "dependencies": {
     "react": "^18.3.1",
@@ -31,7 +31,12 @@
   "build": {
     "appId": "com.dbstudio.pro",
     "productName": "dB Studio",
-    "win": { "target": "portable" },
-    "directories": { "output": "release" }
+    "win": {
+      "target": "portable",
+      "icon": "public/icon.ico"
+    },
+    "directories": {
+      "output": "release"
+    }
   }
 }
