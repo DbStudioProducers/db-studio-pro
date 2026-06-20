@@ -5,12 +5,11 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1280,
     height: 800,
-    backgroundColor: '#111',
-    title: "dB Studio | Professional Audio",
+    backgroundColor: '#111111',
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      webSecurity: false // Permite acesso real ao hardware de áudio
+      webSecurity: false
     }
   });
 
